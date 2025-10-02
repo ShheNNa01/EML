@@ -46,8 +46,8 @@ $path = rtrim($path, '/');
   Llamamos a la función Listar_User() y se la devolvemos.
 */
 if ($path === '/usuarios' && $method === 'GET') {
-    echo json_encode($ctrlUsuarios->Listar_User());
-    exit;
+  echo json_encode($ctrlUsuarios->Listar_User());
+  exit;
 }
 
 /*
@@ -59,48 +59,47 @@ if ($path === '/usuarios' && $method === 'GET') {
   capturamos el error y avisamos (aca tuve que investigar y preguntar mucho, por lo que agradezco el reto).
 */
 if ($path === '/usuarios' && $method === 'POST') {
-    try {
-        $data = json_decode(file_get_contents('php://input'), true);
-        $id = $ctrlUsuarios->create_User($data['nombres'], $data['apellidos'], $data['email'], $data['telefono'], $data['estado']);
-        http_response_code(201);
-        header('Content-Type: application/json');
-        echo json_encode(['id' => $id]);
-
-    } catch (Exception $e) {
-        http_response_code(409);
-        header('Content-Type: application/json');
-        echo json_encode(['error' => $e->getMessage()]);
-    }
-    exit;
+  try {
+    $data = json_decode(file_get_contents('php://input'), true);
+    $id = $ctrlUsuarios->create_User($data['nombres'], $data['apellidos'], $data['email'], $data['telefono'], $data['estado']);
+    http_response_code(201);
+    header('Content-Type: application/json');
+    echo json_encode(['id' => $id]);
+  } catch (Exception $e) {
+    http_response_code(409);
+    header('Content-Type: application/json');
+    echo json_encode(['error' => $e->getMessage()]);
+  }
+  exit;
 }
 
 /*
-  RUTA: /usuarios/{un_numero} (Métodos GET, PUT, DELETE)
+  RUTA: /usuarios/ (Métodos GET, PUT, DELETE)
   Esta parte es para acciones que afectan a un solo usuario.
   Revisa si la URL tiene el formato "/usuarios/" seguido de un número.
   Si es así, agarra ese número (el ID) y decide qué hacer.
 */
 if (preg_match('#^/usuarios/(\d+)$#', $path, $m)) {
-    $id = (int)$m[1];
+  $id = (int)$m[1];
 
-    // Si el método es GET, quieren los datos de ESE usuario.
-    if ($method === 'GET') {
-        echo json_encode($ctrlUsuarios->Obtener_User($id));
-        exit;
-    }
-    // Si el método es PUT, quieren actualizar los datos de ESE usuario.
-    if ($method === 'PUT') {
-        $data = json_decode(file_get_contents('php://input'), true);
-        $ok = $ctrlUsuarios->Update_User($data['nombres'], $data['apellidos'], $data['email'], $data['telefono'], $data['estado'], $id);
-        echo json_encode(['updated' => $ok]);
-        exit;
-    }
-    // Si el método es DELETE, quieren borrar a ESE usuario.
-    if ($method === 'DELETE') {
-        $ok = $ctrlUsuarios->Delete_User($id);
-        echo json_encode(['deleted' => $ok]);
-        exit;
-    }
+  // Si el método es GET, quieren los datos de ESE usuario.
+  if ($method === 'GET') {
+    echo json_encode($ctrlUsuarios->Obtener_User($id));
+    exit;
+  }
+  // Si el método es PUT, quieren actualizar los datos de ESE usuario.
+  if ($method === 'PUT') {
+    $data = json_decode(file_get_contents('php://input'), true);
+    $ok = $ctrlUsuarios->Update_User($data['nombres'], $data['apellidos'], $data['email'], $data['telefono'], $data['estado'], $id);
+    echo json_encode(['updated' => $ok]);
+    exit;
+  }
+  // Si el método es DELETE, quieren borrar a ESE usuario.
+  if ($method === 'DELETE') {
+    $ok = $ctrlUsuarios->Delete_User($id);
+    echo json_encode(['deleted' => $ok]);
+    exit;
+  }
 }
 
 /*
