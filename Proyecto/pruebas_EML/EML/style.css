@@ -1,0 +1,176 @@
+/*
+  Este archivo contiene todos los estilos personalizados. Está dividido en secciones para mantener todo
+  ordenado: los colores principales, la estructura, los componentes y al final,
+  los ajustes para que se vea bien en celulares, dado que solicitan documentacion, espero que les guste el resultado final :D
+  
+*/
+
+/*1. COLORES Y ESTILOS GENERALES*/
+
+/*
+  Aquí definimos nuestra paleta de colores principal en un solo lugar.
+  Si queremos cambiar el color azul de la página, por ejemplo, solo
+  lo cambiamos aquí y se actualizará en todos lados.
+*/
+:root {
+  --sidebar-bg: #2c3e50;
+  --main-bg: #f4f7f6;
+  --card-bg: #ffffff;
+  --primary-color: #3498db;
+  --text-color: #34495e;
+  --border-color: #e0e0e0;
+}
+
+/*
+  Estos son los estilos base para toda la página. Le decimos que use
+  la nueva fuente 'Poppins', le ponemos un color de fondo gris claro
+  y nos aseguramos de que ocupe toda la altura de la pantalla.
+*/
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: var(--main-bg);
+  color: var(--text-color);
+  min-height: 100vh;
+}
+
+/*2. ESTRUCTURA DE LA PÁGINA */
+
+/*
+  Aquí le damos estilo a las dos partes principales de nuestra aplicación:
+  la barra lateral oscura y el área de contenido principal. También definimos
+  cómo se verán los botones del menú.
+*/
+.sidebar {
+  width: 280px;
+  background-color: var(--sidebar-bg);
+  color: white;
+}
+
+.sidebar .nav-link {
+  color: #bdc3c7;
+  transition: all 0.2s ease-in-out;
+}
+
+.sidebar .nav-link:hover,
+.sidebar .nav-link.active {
+  background-color: var(--primary-color);
+  color: white;
+  border-radius: 5px;
+}
+
+.main-content {
+  background-color: var(--main-bg);
+}
+
+/*3. ESTILOS DE LOS COMPONENTES*/
+
+/*
+  En esta sección le damos el look a cada elemento individual: las tarjetas,
+  los títulos, los botones, la tabla y los formularios que aparecen
+  en las ventanas emergentes (modales).
+*/
+
+/* Tarjeta que contiene la tabla, con bordes redondeados y sin líneas. */
+.card {
+  border: none;
+  border-radius: 12px;
+}
+
+/* Títulos con un poco más de grosor para que resalten. */
+h1, h2, h3, h4, h5 {
+  font-weight: 600;
+}
+
+/* Estilo principal de los botones y un pequeño efecto de sombra y
+   movimiento cuando pasas el mouse por encima. */
+.btn-primary {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-primary:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Ajustes a la tabla para que se vea más limpia y espaciosa. */
+.table {
+  margin-bottom: 0;
+}
+.table thead {
+  background-color: #f8f9fa;
+  border-bottom: 2px solid var(--border-color);
+}
+.table th {
+  font-weight: 600;
+  color: var(--text-color);
+}
+.table td, .table th {
+  padding: 1rem;
+  vertical-align: middle;
+}
+
+/* Modificamos los botones de Editar y Eliminar para que tengan texto blanco. */
+.table .btn-warning, .table .btn-danger {
+  color: white !important;
+  margin-right: 5px;
+}
+
+/* Estilos para las ventanas emergentes (modales) y sus formularios. */
+.modal-content {
+  border: none;
+  border-radius: 10px;
+}
+.modal-header {
+  background-color: var(--main-bg);
+  border-bottom: 1px solid var(--border-color);
+}
+
+/* Le damos un borde azul al campo del formulario cuando haces clic en él. */
+.form-control:focus, .form-select:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 0.25rem rgba(52, 152, 219, 0.25);
+}
+
+/*4. AJUSTES PARA CELULARES Y TABLETS (RESPONSIVE)*/
+
+/*
+  Esta es la parte más importante para que la página sea 'responsive'.
+  Le damos instrucciones al navegador sobre cómo reorganizar las cosas
+  cuando la pantalla se hace más pequeña.
+*/
+
+/* Para tablets: hacemos la barra lateral más delgada. */
+@media (max-width: 992px) {
+  .sidebar {
+    width: 200px;
+  }
+  .sidebar .fs-4 {
+    font-size: 1.25rem !important;
+  }
+}
+
+/* Para celulares: ocultamos la barra lateral, apilamos el título y el botón,
+   y hacemos la tabla un poco más pequeña para que quepa todo. */
+@media (max-width: 768px) {
+  .sidebar {
+    display: none !important;
+  }
+  .main-content {
+    width: 100%;
+    padding: 1rem !important;
+  }
+  .main-content header {
+    flex-direction: column;
+    align-items: flex-start !important;
+    gap: 1rem;
+  }
+  .table {
+    font-size: 0.85rem;
+  }
+  .table td, .table th {
+    padding: 0.75rem 0.5rem;
+  }
+}
